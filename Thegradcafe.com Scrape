@@ -1,0 +1,234 @@
+#This is a function to scrape thegradcafe.com reuslts page and to email the user once certain criteria are met
+#On line 205, please enter your email address and password - make sure your gmail settings are set to allow less secure programs access
+
+#Function
+scrape=function(){
+  
+    #Reading in the HTML coding and selecting the correct lines
+    grad=readLines("http://thegradcafe.com/survey/index.php")
+    grad.data1=grad[111:125]
+    
+    
+    #Removing the HTML crap
+    #This could and SHOULD be done in a loop - but this was faster for me
+    grad.data2=gsub(pattern="\t\t", 
+                    replacement="", x=grad.data1, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)
+    
+    grad.data2=gsub(pattern="row", 
+                    replacement="", x=grad.data1, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)
+    
+    grad.data2=gsub(pattern="tr class", 
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)
+    grad.data2=gsub(pattern="row0",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)   
+    
+    grad.data2=gsub(pattern="ul class",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)  
+    
+    grad.data2=gsub(pattern="control",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)  
+    
+    grad.data2=gsub(pattern="instcol",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)  
+    
+    grad.data2=gsub(pattern="td class",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)  
+    
+    grad.data2=gsub(pattern="showControlsBox",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)  
+    
+    grad.data2=gsub(pattern="onMouseOver",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)  
+    
+    grad.data2=gsub(pattern="this",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)  
+    
+    grad.data2=gsub(pattern="hideControlsBox",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)  
+    
+    grad.data2=gsub(pattern="onMouseOut",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)  
+    
+    grad.data2=gsub(pattern="span class",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE) 
+    
+    grad.data2=gsub(pattern="dRejected",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE) 
+    
+    grad.data2=gsub(pattern="dAccepted",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE) 
+    
+    grad.data2=gsub(pattern="datecol",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE) 
+    
+    grad.data2=gsub(pattern="tr",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE) 
+    
+    grad.data2=gsub(pattern="td",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE) 
+    
+    grad.data2=gsub(pattern="ul",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE) 
+    
+    grad.data2=gsub(pattern="li class",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE) 
+    
+    grad.data2=gsub(pattern="hidesBox",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)
+    
+    grad.data2=gsub(pattern="showsBox",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)
+    
+    grad.data2=gsub(pattern="span",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)
+    
+    grad.data2=gsub(pattern="class",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)
+    
+    grad.data2=gsub(pattern="song",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)
+    
+    grad.data2=gsub(pattern="br",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)
+    
+    grad.data2=gsub(pattern="spam",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)
+    
+    grad.data2=gsub(pattern="([\t =\\ <\\ >\\ /\\ \" ()\\ ;\\ #\\ .\\ :\\,0-9])",
+                    replacement=" ", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)
+    
+    grad.data2=gsub(pattern="V Q W",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)
+    
+    grad.data2=gsub(pattern="&diams",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)
+    
+    
+   #Function to keep only the strings I want  
+    keep=function(i){
+      
+      keep3=grep(i,grad.data2)
+      
+    }    
+    
+    #Setting up the new dataframe
+    grad.df=data.frame(matrix(ncol=3, nrow=length(grad.data2)))
+    names(grad.df)=c("stringtime","result","string")
+    
+    grad.df[,3]=grad.data2
+    grad.df[,2]=1:length(grad.data2)
+    grad.df[,1]=Sys.time()
+    
+    #Words to keep - another that would be cleaner in a loop.
+    k1=keep("Penn")
+    k2=keep("Penn State")
+    k3=keep("UVA")
+    k4=keep("University of Virginia")
+    k5=keep("Pitt")
+    k6=keep("Pittsburgh")
+    k7=keep("Political Science")
+    k8=keep("Government")
+    k9=keep("Politics")
+    k10=keep("PhD")
+    
+    #Creating creating a variable of lines to keep
+    keepLines=rbind(k7,k8,k9)
+    i=ncol(keepLines)
+    if (i > 0) {keepLines=c(apply(keepLines,i,rbind))}
+    keepLines=unique(keepLines)
+    
+    
+    #Subsetting the dataframe
+    grad.df2=subset(grad.df, result %in% keepLines)
+    grad.df2=subset(grad.df2, result %in% k10)
+    ###############
+    
+    #Final dataframe
+    #############
+    total=data.frame(read.delim("total2.txt",sep="\t"))
+    total=rbind(total,grad.df2)
+    total2=unique(total)
+    write.table(total2,"total2.txt",sep="\t")
+    #############
+   
+   #For emailing. A new variable that includes poli sci notices from only my selected programs
+   keepLines2=rbind(k1,k2,k3,k4,k5,k6)
+   i=ncol(keepLines2)
+   if (i > 0) {keepLines2=c(apply(keepLines2,i,rbind))}
+   keepLines2=unique(keepLines2)
+   total3=subset(total2,result %in% keepLines2)
+   write.table(total3,"total3.txt",sep="\t")
+   total4=data.frame(read.delim("total3.txt",sep="\t"))
+   total4=rbind(total4,total3)
+   total4=unique(total4)
+   write.table(total4,"total3.txt",sep="\t")
+   
+   
+   
+   #Send an email with an attachment when the correct criteria are met! For me, it's when the most recent dataframe gets more than 5 results
+   if (nrow(total4)>5) {
+   send.mail(from="kganc001@gmail.com",
+             to="kganc001@gmail.com",
+             subject="Grad School Notice",
+             body="Check Yo Shit.",
+             smtp=list(host.name="smtp.gmail.com", port=587, user.name="EMAIL ADDRESS", passwd="PASSWORD", ssl=TRUE),
+             attach.files = c("total3.txt"),
+             authenticate=TRUE,
+             send=TRUE,
+             debug=FALSE)   
+   }
+   
+}
+
+#install.packages("mailR" for the email function)
+library(mailR)
+
+
+#Creating the initial file to recall and populate later
+total=data.frame(matrix(ncol=1,nrow=100))
+names(total)=c("string")
+write.table(total2,"total2.txt",sep="\t")
+
+
+#Creating an empty data frame to house the results of the scrape and to write to file
+results.df=data.frame(matrix(ncol=1, nrow=100))
+names(results.df)=c("string")
+results.df[,1]=""
+
+#Infinite for loop that runs every 5 minutes
+for(i in 1:nrow(results.df)){
+  scrape()
+  print('Keep Calm. You are going to have a great day today!')
+  Sys.sleep(300);
+}
