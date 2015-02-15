@@ -1,5 +1,5 @@
 #This is a function to scrape thegradcafe.com reuslts page and to email the user once certain criteria are met
-#On line 205, please enter your email address and password - make sure your gmail settings are set to allow less secure programs access
+#On line 207, 208, 211, please enter the to/from emails, your email address and password - make sure your gmail settings are set to allow less secure programs access
 
 #Function
 scrape=function(){
@@ -134,6 +134,14 @@ scrape=function(){
                     replacement="", x=grad.data2, ignore.case=TRUE,
                     perl=FALSE, fixed=FALSE, useBytes=FALSE)
     
+    grad.data2=gsub(pattern="href",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)
+    
+    grad.data2=gsub(pattern="extinfo",
+                    replacement="", x=grad.data2, ignore.case=TRUE,
+                    perl=FALSE, fixed=FALSE, useBytes=FALSE)
+    
     
    #Function to keep only the strings I want  
     keep=function(i){
@@ -154,7 +162,7 @@ scrape=function(){
     k1=keep("Penn")
     k2=keep("Penn State")
     k3=keep("UVA")
-    k4=keep("University of Virginia")
+    k4=keep("Virginia")
     k5=keep("Pitt")
     k6=keep("Pittsburgh")
     k7=keep("Political Science")
@@ -194,31 +202,22 @@ scrape=function(){
    total4=unique(total4)
    write.table(total4,"total3.txt",sep="\t")
    
-   
-   
    #Send an email with an attachment when the correct criteria are met! For me, it's when the most recent dataframe gets more than 5 results
    if (nrow(total4)>5) {
-   send.mail(from="kganc001@gmail.com",
-             to="kganc001@gmail.com",
-             subject="Grad School Notice",
-             body="Check Yo Shit.",
-             smtp=list(host.name="smtp.gmail.com", port=587, user.name="EMAIL ADDRESS", passwd="PASSWORD", ssl=TRUE),
-             attach.files = c("total3.txt"),
-             authenticate=TRUE,
-             send=TRUE,
-             debug=FALSE)   
+     send.mail(from="FROMEMAIL",
+               to="TOEMAIL",
+               subject="Grad School Notice",
+               body="Check Yo Shit.",
+               smtp=list(host.name="smtp.gmail.com", port=587, user.name="EMAIL ADDRESS", passwd="PASSWORD", ssl=TRUE),
+               attach.files = c("total3.txt"),
+               authenticate=TRUE,
+               send=TRUE,
+               debug=FALSE)   
    }
-   
 }
 
 #install.packages("mailR" for the email function)
 library(mailR)
-
-
-#Creating the initial file to recall and populate later
-total=data.frame(matrix(ncol=1,nrow=100))
-names(total)=c("string")
-write.table(total2,"total2.txt",sep="\t")
 
 
 #Creating an empty data frame to house the results of the scrape and to write to file
@@ -226,9 +225,15 @@ results.df=data.frame(matrix(ncol=1, nrow=100))
 names(results.df)=c("string")
 results.df[,1]=""
 
+#Creating the initial file to recall and populate later
+total=data.frame(matrix(ncol=3,nrow=100))
+names(total)=c("stringtime","result", "string")
+write.table(total,"total2.txt",sep="\t")
+
+
 #Infinite for loop that runs every 5 minutes
 for(i in 1:nrow(results.df)){
   scrape()
-  print('Keep Calm. You are going to have a great day today!')
-  Sys.sleep(300);
+ print('Keep Calm and Carry On! :)')
+ Sys.sleep(300);
 }
